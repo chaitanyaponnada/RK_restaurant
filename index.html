@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The R.K. Signature Menu</title>
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Inter:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <style>
 /* 1. Global & Utility Styles */
@@ -81,6 +80,8 @@ body {
     border-top: 5px solid var(--gold);
     position: relative;
     z-index: 0;
+    /* Added min-height for better initial display on mobile */
+    min-height: 80vh; 
 }
 
 .menu-header {
@@ -175,17 +176,17 @@ summary:hover {
 
 /* Custom Arrow Symbol and Animation */
 summary::after {
-    content: '›'; /* Changed arrow symbol to professional chevron */
-    font-size: 1.5em; /* Larger for visibility */
+    content: '›';
+    font-size: 1.5em;
     font-weight: 800;
     line-height: 0.5;
-    transform: rotate(90deg); /* Starts pointing right/down */
-    transition: transform 0.3s ease; /* Smooth rotation transition */
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
     color: var(--gold);
 }
 
 details[open] summary::after {
-    transform: rotate(-90deg); /* Rotates up when open */
+    transform: rotate(-90deg);
 }
 
 /* List/Menu Items */
@@ -216,17 +217,11 @@ li {
     font-size: 1.05rem;
     color: #555;
     font-weight: 400;
-    opacity: 0;
-    animation: fadeInSlide 0.5s ease forwards;
+    opacity: 1; /* Changed opacity from 0 to 1 as fade-in animation is removed */
+    /* Removed animation: fadeInSlide */
     position: relative;
 }
 
-/* Animation delays... (Kept for item cascade effect) */
-li:nth-child(1) { animation-delay: 0.1s; }
-li:nth-child(2) { animation-delay: 0.15s; }
-li:nth-child(3) { animation-delay: 0.2s; }
-li:nth-child(4) { animation-delay: 0.25s; }
-li:nth-child(5) { animation-delay: 0.3s; }
 li:last-child {
     border-bottom: none;
     padding-bottom: 0;
@@ -284,6 +279,7 @@ li:last-child {
     position: relative;
     z-index: 1;
     overflow: hidden;
+    /* Ensure special item border is centered on mobile */
 }
 
 .special-item::before {
@@ -307,16 +303,7 @@ li:last-child {
     100% { transform: translateX(100%); }
 }
 
-@keyframes fadeInSlide {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* Removed @keyframes fadeInSlide */
 
 
 /* 7. Footer & Address */
@@ -351,18 +338,27 @@ footer {
 /* 8. Mobile Responsiveness */
 @media (max-width: 768px) {
     .menu-container {
-        margin: 30px auto;
+        margin: 0 auto; /* Removed top/bottom margin for better phone screen coverage */
         padding: 20px;
+        border-radius: 0; /* Full screen edges on smaller devices */
     }
     .menu-title {
         font-size: 2.5rem;
     }
+    .menu-subtitle {
+        font-size: 1.1rem;
+    }
+    .utility-bar {
+        margin-bottom: 30px;
+    }
     summary {
         font-size: 1.15rem;
+        padding: 15px 20px;
     }
     li {
         flex-direction: column;
         align-items: flex-start;
+        padding: 15px 0;
     }
     .item-name {
         padding-right: 0;
@@ -389,6 +385,10 @@ footer {
     .address-box {
         font-size: 0.85rem;
     }
+    /* Ensure special item padding looks good on smallest screens */
+    .special-item {
+        padding: 12px 8px;
+    }
 }
 </style>
 </head>
@@ -402,154 +402,155 @@ footer {
 <div class="overlay"></div>
 
 <div class="menu-container">
-    <header class="menu-header" data-aos="fade-down" data-aos-duration="1000">
+    <header class="menu-header">
         <h1 class="menu-title">R.K RESTAURANT</h1>
         <p class="menu-subtitle">The Signature Menu</p>
     </header>
 
-    <div class="utility-bar" data-aos="fade-up" data-aos-delay="200">
-        <input type="text" class="search-input" placeholder="Search our signature dishes...">
+    <div class="utility-bar">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search our signature dishes...">
     </div>
     
-    <details open data-aos="fade-up">
-        <summary>1. VEG STARTERS</summary>
-        <ul>
-            <li><span class="item-name">Chilli Paneer <span class="telugu-name">(చిల్లి పనీర్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹150</span></li>
-            <li><span class="item-name">Chilli Mushroom <span class="telugu-name">(చిల్లి మష్రూమ్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹150</span></li>
-            <li><span class="item-name">Crispy Corn <span class="telugu-name">(క్రిస్పీ కార్న్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹170</span></li>
-        </ul>
-    </details>
-    
-    <details data-aos="fade-up" data-aos-delay="100">
-        <summary>2. NON-VEG STARTERS – CHICKEN</summary>
-        <ul>
-            <li><span class="item-name">Chicken Joint <span class="telugu-name">(చికెన్ జాయింట్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹100</span></li>
-            <li><span class="item-name">Chicken Kebab (2) <span class="telugu-name">(చికెన్ కబాబ్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹100</span></li>
-            <li><span class="item-name">Chicken Fry <span class="telugu-name">(చికెన్ ఫ్రై)</span></span><span class="rate"><span class="sr-only">Price: </span>₹130</span></li>
-            <li><span class="item-name">Chicken Wings <span class="telugu-name">(చికెన్ వింగ్స్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹140</span></li>
-            <li><span class="item-name">Chicken Liver Fry <span class="telugu-name">(చికెన్ లివర్ ఫ్రై)</span></span><span class="rate"><span class="sr-only">Price: </span>₹150</span></li>
-            <li><span class="item-name">Chilli Chicken <span class="telugu-name">(చిల్లి చికెన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹170</span></li>
-            <li><span class="item-name">Chicken Lollipop <span class="telugu-name">(చికెన్ లాలిపాప్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
-            <li><span class="item-name">Garlic Chicken <span class="telugu-name">(గార్లిక్ చికెన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
-            <li><span class="item-name">RR Chicken <span class="telugu-name">(RR చికెన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹190</span></li>
-            <li><span class="item-name">Chicken Majestic <span class="telugu-name">(చికెన్ మెజెస్టిక్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹190</span></li>
-            <li><span class="item-name">Dragon Chicken <span class="telugu-name">(డ్రాగన్ చికెన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹210</span></li>
-        </ul>
-    </details>
-    
-    <details data-aos="fade-up" data-aos-delay="200">
-        <summary>3. SEA FOOD STARTERS</summary>
-        <ul>
-            <li><span class="item-name">Apollo Fish Fry <span class="telugu-name">(అపోలో ఫిష్ ఫ్రై)</span></span><span class="rate"><span class="sr-only">Price: </span>₹170</span></li>
-            <li><span class="item-name">Prawn Fry <span class="telugu-name">(ప్రాన్ ఫ్రై)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
-            <li><span class="item-name">Chilli Prawn <span class="telugu-name">(చిల్లి ప్రాన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
-            <li><span class="item-name">Loose Prawn <span class="telugu-name">(లూస్ ప్రాన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
-            <li><span class="item-name">Prawn 65 <span class="telugu-name">(ప్రాన్ 65)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
-        </ul>
-    </details>
+    <div id="menuContent">
+        <details open>
+            <summary>1. VEG STARTERS</summary>
+            <ul>
+                <li><span class="item-name">Chilli Paneer <span class="telugu-name">(చిల్లి పనీర్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹150</span></li>
+                <li><span class="item-name">Chilli Mushroom <span class="telugu-name">(చిల్లి మష్రూమ్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹150</span></li>
+                <li><span class="item-name">Crispy Corn <span class="telugu-name">(క్రిస్పీ కార్న్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹170</span></li>
+            </ul>
+        </details>
+        
+        <details>
+            <summary>2. NON-VEG STARTERS – CHICKEN</summary>
+            <ul>
+                <li><span class="item-name">Chicken Joint <span class="telugu-name">(చికెన్ జాయింట్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹100</span></li>
+                <li><span class="item-name">Chicken Kebab (2) <span class="telugu-name">(చికెన్ కబాబ్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹100</span></li>
+                <li><span class="item-name">Chicken Fry <span class="telugu-name">(చికెన్ ఫ్రై)</span></span><span class="rate"><span class="sr-only">Price: </span>₹130</span></li>
+                <li><span class="item-name">Chicken Wings <span class="telugu-name">(చికెన్ వింగ్స్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹140</span></li>
+                <li><span class="item-name">Chicken Liver Fry <span class="telugu-name">(చికెన్ లివర్ ఫ్రై)</span></span><span class="rate"><span class="sr-only">Price: </span>₹150</span></li>
+                <li><span class="item-name">Chilli Chicken <span class="telugu-name">(చిల్లి చికెన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹170</span></li>
+                <li><span class="item-name">Chicken Lollipop <span class="telugu-name">(చికెన్ లాలిపాప్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
+                <li><span class="item-name">Garlic Chicken <span class="telugu-name">(గార్లిక్ చికెన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
+                <li><span class="item-name">RR Chicken <span class="telugu-name">(RR చికెన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹190</span></li>
+                <li><span class="item-name">Chicken Majestic <span class="telugu-name">(చికెన్ మెజెస్టిక్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹190</span></li>
+                <li><span class="item-name">Dragon Chicken <span class="telugu-name">(డ్రాగన్ చికెన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹210</span></li>
+            </ul>
+        </details>
+        
+        <details>
+            <summary>3. SEA FOOD STARTERS</summary>
+            <ul>
+                <li><span class="item-name">Apollo Fish Fry <span class="telugu-name">(అపోలో ఫిష్ ఫ్రై)</span></span><span class="rate"><span class="sr-only">Price: </span>₹170</span></li>
+                <li><span class="item-name">Prawn Fry <span class="telugu-name">(ప్రాన్ ఫ్రై)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
+                <li><span class="item-name">Chilli Prawn <span class="telugu-name">(చిల్లి ప్రాన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
+                <li><span class="item-name">Loose Prawn <span class="telugu-name">(లూస్ ప్రాన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
+                <li><span class="item-name">Prawn 65 <span class="telugu-name">(ప్రాన్ 65)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
+            </ul>
+        </details>
 
-    <details data-aos="fade-up" data-aos-delay="300">
-        <summary>4. MUTTON STARTERS</summary>
-        <ul>
-            <li><span class="item-name">Mutton Fry <span class="telugu-name">(మటన్ ఫ్రై)</span></span><span class="rate"><span class="sr-only">Price: </span>₹220</span></li>
-            <li><span class="item-name">Chilli Mutton <span class="telugu-name">(చిల్లి మటన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹240</span></li>
-        </ul>
-    </details>
-    
-    <details data-aos="fade-up" data-aos-delay="400">
-        <summary>5. VEG CURRIES</summary>
-        <ul>
-            <li><span class="item-name">Paneer Curry <span class="telugu-name">(పనీర్ కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹80</span></li>
-            <li><span class="item-name">Mushroom Curry <span class="telugu-name">(మష్రూమ్ కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹80</span></li>
-            <li><span class="item-name">Methi Cheman <span class="telugu-name">(మెంతి చేమన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹120</span></li>
-            <li><span class="item-name">Cashew Paneer Curry <span class="telugu-name">(జీడిపప్పు పనీర్ కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹150</span></li>
-            <li><span class="item-name">Cashew Tomato Curry <span class="telugu-name">(జీడిపప్పు టమాటో కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹150</span></li>
-        </ul>
-    </details>
-    
-    <details data-aos="fade-up" data-aos-delay="500">
-        <summary>6. NON-VEG CURRIES</summary>
-        <ul>
-            <li><span class="item-name">Apollo Fish Curry <span class="telugu-name">(అపోలో ఫిష్ కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹150</span></li>
-            <li><span class="item-name">Prawn Curry <span class="telugu-name">(రొయ్యల కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
-            <li><span class="item-name">Chicken Gongura Curry <span class="telugu-name">(చికెన్ గోంగూర కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
-            <li><span class="item-name">Prawn Gongura Curry <span class="telugu-name">(రొయ్యల గోంగూర కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
-            <li><span class="item-name">Mutton Curry <span class="telugu-name">(మటన్ కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
-            <li><span class="item-name">Natu Kodi Curry <span class="telugu-name">(నాటు కోడి కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
-            <li><span class="item-name">Mutton Gongura Curry <span class="telugu-name">(మటన్ గోంగూర కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹220</span></li>
-        </ul>
-    </details>
+        <details>
+            <summary>4. MUTTON STARTERS</summary>
+            <ul>
+                <li><span class="item-name">Mutton Fry <span class="telugu-name">(మటన్ ఫ్రై)</span></span><span class="rate"><span class="sr-only">Price: </span>₹220</span></li>
+                <li><span class="item-name">Chilli Mutton <span class="telugu-name">(చిల్లి మటన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹240</span></li>
+            </ul>
+        </details>
+        
+        <details>
+            <summary>5. VEG CURRIES</summary>
+            <ul>
+                <li><span class="item-name">Paneer Curry <span class="telugu-name">(పనీర్ కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹80</span></li>
+                <li><span class="item-name">Mushroom Curry <span class="telugu-name">(మష్రూమ్ కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹80</span></li>
+                <li><span class="item-name">Methi Cheman <span class="telugu-name">(మెంతి చేమన్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹120</span></li>
+                <li><span class="item-name">Cashew Paneer Curry <span class="telugu-name">(జీడిపప్పు పనీర్ కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹150</span></li>
+                <li><span class="item-name">Cashew Tomato Curry <span class="telugu-name">(జీడిపప్పు టమాటో కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹150</span></li>
+            </ul>
+        </details>
+        
+        <details>
+            <summary>6. NON-VEG CURRIES</summary>
+            <ul>
+                <li><span class="item-name">Apollo Fish Curry <span class="telugu-name">(అపోలో ఫిష్ కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹150</span></li>
+                <li><span class="item-name">Prawn Curry <span class="telugu-name">(రొయ్యల కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
+                <li><span class="item-name">Chicken Gongura Curry <span class="telugu-name">(చికెన్ గోంగూర కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
+                <li><span class="item-name">Prawn Gongura Curry <span class="telugu-name">(రొయ్యల గోంగూర కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
+                <li><span class="item-name">Mutton Curry <span class="telugu-name">(మటన్ కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
+                <li><span class="item-name">Natu Kodi Curry <span class="telugu-name">(నాటు కోడి కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
+                <li><span class="item-name">Mutton Gongura Curry <span class="telugu-name">(మటన్ గోంగూర కూర)</span></span><span class="rate"><span class="sr-only">Price: </span>₹220</span></li>
+            </ul>
+        </details>
 
-    <details data-aos="fade-up" data-aos-delay="600">
-        <summary>7. VEG BIRYANI</summary>
-        <ul>
-            <li><span class="item-name">Plain Biryani <span class="telugu-name">(ప్లెయిన్ బిర్యాని)</span><span class="detail">(Includes Salan and Curd)</span></span><span class="rate"><span class="sr-only">Price: </span>₹80</span></li>
-            <li><span class="item-name">Paneer Biryani <span class="telugu-name">(పనీర్ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
-            <li><span class="item-name">Mushroom Biryani <span class="telugu-name">(మష్రూమ్ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
-            <li><span class="item-name">Veg Moghalai Biryani <span class="telugu-name">(వెజ్ మొఘలాయి బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹170</span></li>
-            <li class="special-item"><span class="item-name">Cashew Paneer Biryani <span class="telugu-name">(జీడిపప్పు పనీర్ బిర్యాని)</span><span class="detail">Chef's Special</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
-        </ul>
-    </details>
+        <details>
+            <summary>7. VEG BIRYANI</summary>
+            <ul>
+                <li><span class="item-name">Plain Biryani <span class="telugu-name">(ప్లెయిన్ బిర్యాని)</span><span class="detail">(Includes Salan and Curd)</span></span><span class="rate"><span class="sr-only">Price: </span>₹80</span></li>
+                <li><span class="item-name">Paneer Biryani <span class="telugu-name">(పనీర్ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
+                <li><span class="item-name">Mushroom Biryani <span class="telugu-name">(మష్రూమ్ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
+                <li><span class="item-name">Veg Moghalai Biryani <span class="telugu-name">(వెజ్ మొఘలాయి బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹170</span></li>
+                <li class="special-item"><span class="item-name">Cashew Paneer Biryani <span class="telugu-name">(జీడిపప్పు పనీర్ బిర్యాని)</span><span class="detail">Chef's Special</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
+            </ul>
+        </details>
 
-    <details data-aos="fade-up" data-aos-delay="700">
-        <summary>8. NON-VEG BIRYANI</summary>
-        <ul>
-            <li class="special-item"><span class="item-name">Chicken Fry Biryani <span class="telugu-name">(చికెన్ ఫ్రై బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹140</span></li>
-            <li class="special-item"><span class="item-name">Chicken Dum Biryani <span class="telugu-name">(చికెన్ దమ్ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
-            <li><span class="item-name">Chicken Curry Biryani <span class="telugu-name">(చికెన్ కర్రీ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
-            <li><span class="item-name">Chicken Joint Biryani <span class="telugu-name">(చికెన్ జాయింట్ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
-            <li><span class="item-name">Chicken Kebab Biryani <span class="telugu-name">(చికెన్ కబాబ్ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
-            <li class="special-item"><span class="item-name">Chicken Moghalai Biryani <span class="telugu-name">(చికెన్ మొఘలాయి బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹190</span></li>
-            <li class="special-item"><span class="item-name">SP. Chicken Biryani (B/L) <span class="telugu-name">(స్పెషల్ బోన్లెస్ చికెన్ బిర్యాని)</span><span class="detail">Boneless</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
-            <li><span class="item-name">Chicken Joint Curry Biryani <span class="telugu-name">(చికెన్ జాయింట్ కర్రీ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
-            <li><span class="item-name">Chicken Kebab Curry Biryani <span class="telugu-name">(చికెన్ కబాబ్ కర్రీ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
-            <li><span class="item-name">Chicken Gongura Biryani <span class="telugu-name">(చికెన్ గోంగూర బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹210</span></li>
-            <li><span class="item-name">Prawn Curry Biryani <span class="telugu-name">(రొయ్యల కర్రీ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹220</span></li>
-            <li><span class="item-name">Prawn Mughalai Biryani <span class="telugu-name">(రొయ్యల మొఘలాయి బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹230</span></li>
-            <li><span class="item-name">Prawn Fry Biryani <span class="telugu-name">(రొయ్యల ఫ్రై బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹230</span></li>
-            <li><span class="item-name">Mutton Mughalai Biryani <span class="telugu-name">(మటన్ మొఘలాయి బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
-            <li><span class="item-name">Mutton Curry Biryani <span class="telugu-name">(మటన్ కర్రీ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
-            <li><span class="item-name">Mutton Fry Biryani <span class="telugu-name">(మటన్ ఫ్రై బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
-            <li><span class="item-name">Prawn Gongura Biryani <span class="telugu-name">(రొయ్యల గోంగూర బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
-            <li class="special-item"><span class="item-name">Mixed Mughalai Biryani <span class="telugu-name">(మిక్స్డ్ మొఘలాయి బిర్యాని)</span><span class="detail">Chicken, Mutton, Prawn</span></span><span class="rate"><span class="sr-only">Price: </span>₹260</span></li>
-            <li><span class="item-name">Natu Kodi Biryani <span class="telugu-name">(నాటు కోడి బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹260</span></li>
-            <li><span class="item-name">Mutton Gongura Biryani <span class="telugu-name">(మటన్ గోంగూర బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹260</span></li>
-            <li class="special-item"><span class="item-name">Mutton Dum Biryani <span class="telugu-name">(మటన్ దమ్ బిర్యాని)</span><span class="detail">(Available Wed & Sun)</span></span><span class="rate"><span class="sr-only">Price: </span>₹280</span></li>
-        </ul>
-    </details>
+        <details>
+            <summary>8. NON-VEG BIRYANI</summary>
+            <ul>
+                <li class="special-item"><span class="item-name">Chicken Fry Biryani <span class="telugu-name">(చికెన్ ఫ్రై బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹140</span></li>
+                <li class="special-item"><span class="item-name">Chicken Dum Biryani <span class="telugu-name">(చికెన్ దమ్ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
+                <li><span class="item-name">Chicken Curry Biryani <span class="telugu-name">(చికెన్ కర్రీ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
+                <li><span class="item-name">Chicken Joint Biryani <span class="telugu-name">(చికెన్ జాయింట్ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
+                <li><span class="item-name">Chicken Kebab Biryani <span class="telugu-name">(చికెన్ కబాబ్ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
+                <li class="special-item"><span class="item-name">Chicken Moghalai Biryani <span class="telugu-name">(చికెన్ మొఘలాయి బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹190</span></li>
+                <li class="special-item"><span class="item-name">SP. Chicken Biryani (B/L) <span class="telugu-name">(స్పెషల్ బోన్లెస్ చికెన్ బిర్యాని)</span><span class="detail">Boneless</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
+                <li><span class="item-name">Chicken Joint Curry Biryani <span class="telugu-name">(చికెన్ జాయింట్ కర్రీ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
+                <li><span class="item-name">Chicken Kebab Curry Biryani <span class="telugu-name">(చికెన్ కబాబ్ కర్రీ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹200</span></li>
+                <li><span class="item-name">Chicken Gongura Biryani <span class="telugu-name">(చికెన్ గోంగూర బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹210</span></li>
+                <li><span class="item-name">Prawn Curry Biryani <span class="telugu-name">(రొయ్యల కర్రీ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹220</span></li>
+                <li><span class="item-name">Prawn Mughalai Biryani <span class="telugu-name">(రొయ్యల మొఘలాయి బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹230</span></li>
+                <li><span class="item-name">Prawn Fry Biryani <span class="telugu-name">(రొయ్యల ఫ్రై బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹230</span></li>
+                <li><span class="item-name">Mutton Mughalai Biryani <span class="telugu-name">(మటన్ మొఘలాయి బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
+                <li><span class="item-name">Mutton Curry Biryani <span class="telugu-name">(మటన్ కర్రీ బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
+                <li><span class="item-name">Mutton Fry Biryani <span class="telugu-name">(మటన్ ఫ్రై బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
+                <li><span class="item-name">Prawn Gongura Biryani <span class="telugu-name">(రొయ్యల గోంగూర బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
+                <li class="special-item"><span class="item-name">Mixed Mughalai Biryani <span class="telugu-name">(మిక్స్డ్ మొఘలాయి బిర్యాని)</span><span class="detail">Chicken, Mutton, Prawn</span></span><span class="rate"><span class="sr-only">Price: </span>₹260</span></li>
+                <li><span class="item-name">Natu Kodi Biryani <span class="telugu-name">(నాటు కోడి బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹260</span></li>
+                <li><span class="item-name">Mutton Gongura Biryani <span class="telugu-name">(మటన్ గోంగూర బిర్యాని)</span></span><span class="rate"><span class="sr-only">Price: </span>₹260</span></li>
+                <li class="special-item"><span class="item-name">Mutton Dum Biryani <span class="telugu-name">(మటన్ దమ్ బిర్యాని)</span><span class="detail">(Available Wed & Sun)</span></span><span class="rate"><span class="sr-only">Price: </span>₹280</span></li>
+            </ul>
+        </details>
 
-    <details data-aos="fade-up" data-aos-delay="800">
-        <summary>9. FRIED RICE</summary>
-        <ul>
-            <div class="sub-heading">VEG FRIED RICE</div>
-            <li><span class="item-name">Veg Fried Rice <span class="telugu-name">(వెజ్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹120</span></li>
-            <li><span class="item-name">Paneer Fried Rice <span class="telugu-name">(పనీర్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
-            <li><span class="item-name">Mushroom Fried Rice <span class="telugu-name">(మష్రూమ్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
-            <li style="border-bottom: 1px dashed #e0e0e5;"><span class="item-name">SP Veg Fried Rice <span class="telugu-name">(స్పెషల్ వెజ్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹190</span></li>
+        <details>
+            <summary>9. FRIED RICE</summary>
+            <ul>
+                <div class="sub-heading">VEG FRIED RICE</div>
+                <li><span class="item-name">Veg Fried Rice <span class="telugu-name">(వెజ్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹120</span></li>
+                <li><span class="item-name">Paneer Fried Rice <span class="telugu-name">(పనీర్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
+                <li><span class="item-name">Mushroom Fried Rice <span class="telugu-name">(మష్రూమ్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
+                <li style="border-bottom: 1px dashed #e0e0e5;"><span class="item-name">SP Veg Fried Rice <span class="telugu-name">(స్పెషల్ వెజ్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹190</span></li>
 
-            <div class="sub-heading" style="margin-top: 20px;">NON-VEG FRIED RICE</div>
-            <li><span class="item-name">Egg Fried Rice <span class="telugu-name">(ఎగ్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹140</span></li>
-            <li><span class="item-name">Chicken Fried Rice <span class="telugu-name">(చికెన్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
-            <li class="special-item"><span class="item-name">Fry Piece Fried Rice <span class="telugu-name">(ఫ్రై పీస్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
-            <li><span class="item-name">SP Chicken Fried Rice <span class="telugu-name">(స్పెషల్ చికెన్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹210</span></li>
-            <li><span class="item-name">Mixed Fried Rice <span class="telugu-name">(మిక్స్డ్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹260</span></li>
-            <li><span class="item-name">Mutton Fried Rice <span class="telugu-name">(మటన్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
-            <li><span class="item-name">SP Mutton Fried Rice <span class="telugu-name">(స్పెషల్ మటన్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹270</span></li>
-            <li class="special-item"><span class="item-name">SP Prawn Fried Rice <span class="telugu-name">(స్పెషల్ రొయ్యల ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
-            <li><span class="item-name">Prawn Fried Rice <span class="telugu-name">(రొయ్యల ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
-        </ul>
-    </details>
-    
-    <details data-aos="fade-up" data-aos-delay="900">
-        <summary>10. BEVERAGES</summary>
-        <ul>
-            <li><span class="item-name">Water Bottle <span class="telugu-name">(వాటర్ బాటిల్)</span><span class="detail">(½ L)</span></span><span class="rate"><span class="sr-only">Price: </span>₹10</span></li>
-            <li><span class="item-name">Water Bottle <span class="telugu-name">(వాటర్ బాటిల్)</span><span class="detail">(1 L)</span></span><span class="rate"><span class="sr-only">Price: </span>₹20</span></li>
-            <li><span class="item-name">Soft Drink <span class="telugu-name">(సాఫ్ట్ డ్రింక్)</span><span class="detail">(1 L)</span></span><span class="rate"><span class="sr-only">Price: </span>₹20</span></li>
-        </ul>
-    </details>
-
-    <div class="address-box" data-aos="fade-up">
+                <div class="sub-heading" style="margin-top: 20px;">NON-VEG FRIED RICE</div>
+                <li><span class="item-name">Egg Fried Rice <span class="telugu-name">(ఎగ్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹140</span></li>
+                <li><span class="item-name">Chicken Fried Rice <span class="telugu-name">(చికెన్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹160</span></li>
+                <li class="special-item"><span class="item-name">Fry Piece Fried Rice <span class="telugu-name">(ఫ్రై పీస్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹180</span></li>
+                <li><span class="item-name">SP Chicken Fried Rice <span class="telugu-name">(స్పెషల్ చికెన్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹210</span></li>
+                <li><span class="item-name">Mixed Fried Rice <span class="telugu-name">(మిక్స్డ్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹260</span></li>
+                <li><span class="item-name">Mutton Fried Rice <span class="telugu-name">(మటన్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
+                <li><span class="item-name">SP Mutton Fried Rice <span class="telugu-name">(స్పెషల్ మటన్ ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹270</span></li>
+                <li class="special-item"><span class="item-name">SP Prawn Fried Rice <span class="telugu-name">(స్పెషల్ రొయ్యల ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
+                <li><span class="item-name">Prawn Fried Rice <span class="telugu-name">(రొయ్యల ఫ్రైడ్ రైస్)</span></span><span class="rate"><span class="sr-only">Price: </span>₹250</span></li>
+            </ul>
+        </details>
+        
+        <details>
+            <summary>10. BEVERAGES</summary>
+            <ul>
+                <li><span class="item-name">Water Bottle <span class="telugu-name">(వాటర్ బాటిల్)</span><span class="detail">(½ L)</span></span><span class="rate"><span class="sr-only">Price: </span>₹10</span></li>
+                <li><span class="item-name">Water Bottle <span class="telugu-name">(వాటర్ బాటిల్)</span><span class="detail">(1 L)</span></span><span class="rate"><span class="sr-only">Price: </span>₹20</span></li>
+                <li><span class="item-name">Soft Drink <span class="telugu-name">(సాఫ్ట్ డ్రింక్)</span><span class="detail">(1 L)</span></span><span class="rate"><span class="sr-only">Price: </span>₹20</span></li>
+            </ul>
+        </details>
+    </div>
+    <div class="address-box">
         <span class="address-label">VISIT US</span>
         Address: Old Bypass Rd, Jampet, Rajamahendravaram, Andhra Pradesh 533104
     </div>
@@ -557,11 +558,73 @@ footer {
     <footer>THE R.K. EXPERIENCE • EST. 1999 • THANK YOU FOR DINING WITH US</footer>
 </div>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    AOS.init({
-        once: true,
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const menuItems = document.querySelectorAll('#menuContent li');
+    const detailsElements = document.querySelectorAll('#menuContent details');
+
+    // 1. Search Functionality
+    searchInput.addEventListener('keyup', function(e) {
+        const searchText = e.target.value.toLowerCase().trim();
+
+        // 1a. Filter individual items and manage visibility
+        menuItems.forEach(item => {
+            // Get text from item name and Telugu name (the content visible to user)
+            const itemName = item.querySelector('.item-name').textContent.toLowerCase();
+            
+            if (itemName.includes(searchText)) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        // 1b. Manage visibility of whole sections (details elements)
+        detailsElements.forEach(details => {
+            let visibleItemCount = 0;
+            const listItems = details.querySelectorAll('li');
+
+            listItems.forEach(item => {
+                if (item.style.display === 'flex') {
+                    visibleItemCount++;
+                }
+            });
+
+            const summary = details.querySelector('summary');
+
+            if (visibleItemCount > 0) {
+                // If the section contains visible items, display the entire section
+                details.style.display = 'block';
+                
+                // Optional: Automatically open sections when searching
+                if (searchText.length > 0) {
+                    details.open = true;
+                }
+
+            } else {
+                // If no items match the search, hide the entire section
+                details.style.display = 'none';
+            }
+        });
+
+        // 1c. Close all sections if search is empty
+        if (searchText.length === 0) {
+            detailsElements.forEach((details, index) => {
+                details.style.display = 'block';
+                // Only keep the first section open, close others
+                details.open = (index === 0); 
+            });
+        }
     });
+
+    // 2. Initial Setup: Collapse all except the first one
+    detailsElements.forEach((details, index) => {
+        if (index > 0) {
+            details.open = false;
+        }
+    });
+});
 </script>
 </body>
 </html>
